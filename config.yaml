@@ -7,7 +7,7 @@ experiments:
     
     train:
       lr: 0.0001
-      epochs: 100
+      epochs: 50
       patience: 10
       optimizer: "adam"              
       loss: "crossentropy" 
@@ -85,7 +85,7 @@ experiments:
     
     train:
       lr: 0.0001
-      epochs: 20
+      epochs: 100
       patience: 5
       optimizer: adam
       loss: crossentropy
@@ -101,19 +101,20 @@ experiments:
       split_pct: 0.2
       seed: 42
     experiment:
-      name: exp4
+      name: exp3
 
-  exp_resnet18_baseline:
+  exp_ournet_more_dropout:
     model:
-      name: resnet18
+      name: ournet
       num_classes: 100
-      dropout: 0.0        
+      dropout: 0.5
     
     train:
       lr: 0.0001
-      epochs: 100
+      epochs: 50
       patience: 10
       optimizer: adam
+      weight_decay: 0.0005
       loss: crossentropy
     
     scheduler:
@@ -127,4 +128,64 @@ experiments:
       split_pct: 0.2
       seed: 42
     experiment:
+      name: exp4
+
+  exp_resnet18_cosine_lr:
+    model:
+      name: resnet18
+      num_classes: 70
+      dropout: 0.0
+
+    train:
+      lr: 0.001
+      epochs: 70
+      patience: 10
+      optimizer: adam
+      loss: crossentropy
+
+    scheduler:
+      type: cosineannealing
+      T_max: 50 
+      step_size: 10  
+      eta_min: 0.00001
+      gamma: 0.5
+
+    data:
+      batch_size: 32
+      image_size: 224
+      split_pct: 0.2
+      seed: 42
+    experiment:
       name: exp5
+
+  exp_resnet18_strong_aug:
+    model:
+      name: resnet18
+      num_classes: 100
+      dropout: 0.0
+
+    train:
+      lr: 0.0005
+      epochs: 100
+      patience: 10
+      optimizer: adam
+      loss: crossentropy
+
+    scheduler:
+      type: steplr
+      step_size: 10
+      gamma: 0.5
+
+    data:
+      batch_size: 64
+      image_size: 224
+      split_pct: 0.2
+      seed: 42
+      augmentations:
+        horizontal_flip: true
+        random_crop: true
+        random_rotation: 15
+        color_jitter: true
+
+    experiment:
+      name: exp7

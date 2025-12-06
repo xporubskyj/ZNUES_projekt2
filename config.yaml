@@ -1,7 +1,7 @@
 experiments:
-  exp_ournet1_baseline:
+  exp_ournet_baseline:
     model:
-      name: ournet1
+      name: ournet
       num_classes: 100
       dropout: 0.3
     
@@ -24,32 +24,6 @@ experiments:
       seed: 42
     experiment:
       name: exp1
-
-  exp_ournet2_baseline:
-    model:
-      name: ournet2
-      num_classes: 100
-      dropout: 0.3
-
-    train:
-      lr: 0.0001
-      epochs: 100
-      patience: 10
-      optimizer: "adam"
-      loss: "crossentropy"
-
-    scheduler:
-      type: steplr
-      step_size: 10
-      gama: 0.5
-
-    data:
-      batch_size: 32
-      image_size: 224
-      split_pct: 0.2
-      seed: 42
-    
-    experiment: exp2
 
   exp_alexnet_baseline:
     model:
@@ -75,11 +49,11 @@ experiments:
       split_pct: 0.2
       seed: 42
     experiment:
-      name: exp3
+      name: exp2
       
-  exp_resnet18_pretrain_baseline:
+  exp_resnet18_baseline:
     model:
-      name: resnet18_pre
+      name: exp_resnet18_baseline
       num_classes: 100
       dropout: 0.0        
     
@@ -133,7 +107,7 @@ experiments:
   exp_resnet18_cosine_lr:
     model:
       name: resnet18
-      num_classes: 70
+      num_classes: 100
       dropout: 0.0
 
     train:
@@ -186,6 +160,67 @@ experiments:
         random_crop: true
         random_rotation: 15
         color_jitter: true
+    experiment:
+      name: exp6
 
+  exp_efficientnet_b0_strong_aug:
+    model:
+      name: efficientnet_b0
+      num_classes: 100
+      dropout: 0.0
+
+    train:
+      lr: 0.0005
+      epochs: 50
+      patience: 10
+      optimizer: adam
+      loss: crossentropy
+
+    scheduler:
+      type: steplr
+      step_size: 10
+      gamma: 0.5
+
+    data:
+      batch_size: 64
+      image_size: 224
+      split_pct: 0.2
+      seed: 42
+      augmentations:
+        horizontal_flip: true
+        random_crop: true
+        random_rotation: 15
+        color_jitter: true
     experiment:
       name: exp7
+      
+  exp_densenet121_strong_aug:
+    model:
+      name: densenet121
+      num_classes: 100
+      dropout: 0.0
+
+    train:
+      lr: 0.0005
+      epochs: 50
+      patience: 10
+      optimizer: adam
+      loss: crossentropy
+
+    scheduler:
+      type: steplr
+      step_size: 10
+      gamma: 0.5
+
+    data:
+      batch_size: 64
+      image_size: 224
+      split_pct: 0.2
+      seed: 42
+      augmentations:
+        horizontal_flip: true
+        random_crop: true
+        random_rotation: 15
+        color_jitter: true
+    experiment:
+      name: exp8

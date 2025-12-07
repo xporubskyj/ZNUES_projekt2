@@ -25,7 +25,32 @@ experiments:
     experiment:
       name: exp1
 
-  exp_alexnet_baseline:
+  ournetv2_on2_experiment:
+    model:
+      name: "On2"
+      num_classes: 100
+
+    train:
+      lr: 0.0005
+      epochs: 70
+      patience: 10
+      optimizer: adam
+      loss: crossentropy
+
+    scheduler:
+      type: steplr
+      step_size: 10
+      gamma: 0.5
+
+    data:
+      batch_size: 64
+      image_size: 224
+      split_pct: 0.2
+      seed: 42
+    experiment:
+      name: exp2
+
+  exp_alexnet_finetune:
     model:
       name: alexnet_pre
       num_classes: 100
@@ -49,7 +74,33 @@ experiments:
       split_pct: 0.2
       seed: 42
     experiment:
-      name: exp2
+      name: exp3
+
+  exp_alexnet_scratch:
+    model:
+      name: alexnet_scratch
+      num_classes: 100
+      dropout: 0.0        
+    
+    train:
+      lr: 0.0001
+      epochs: 100
+      patience: 10
+      optimizer: adam
+      loss: crossentropy
+    
+    scheduler:
+      type: steplr
+      step_size: 10
+      gamma: 0.5
+
+    data:
+      batch_size: 32
+      image_size: 224
+      split_pct: 0.2
+      seed: 42
+    experiment:
+      name: exp4
       
   exp_resnet18_baseline:
     model:
@@ -75,25 +126,24 @@ experiments:
       split_pct: 0.2
       seed: 42
     experiment:
-      name: exp3
+      name: exp5
 
-  exp_ournet_more_dropout:
+  exp_restnet_scratch:
     model:
-      name: ournet
+      name: resnet18_scratch
       num_classes: 100
-      dropout: 0.5
+      dropout: 0.0        
     
     train:
       lr: 0.0001
-      epochs: 50
-      patience: 10
+      epochs: 100
+      patience: 5
       optimizer: adam
-      weight_decay: 0.0005
       loss: crossentropy
     
     scheduler:
       type: steplr
-      step_size: 10
+      step_size: 5
       gamma: 0.5
 
     data:
@@ -101,71 +151,12 @@ experiments:
       image_size: 224
       split_pct: 0.2
       seed: 42
-    experiment:
-      name: exp4
-
-  exp_resnet18_cosine_lr:
-    model:
-      name: resnet18
-      num_classes: 100
-      dropout: 0.0
-
-    train:
-      lr: 0.001
-      epochs: 70
-      patience: 10
-      optimizer: adam
-      loss: crossentropy
-
-    scheduler:
-      type: cosineannealing
-      T_max: 50 
-      step_size: 10  
-      eta_min: 0.00001
-      gamma: 0.5
-
-    data:
-      batch_size: 32
-      image_size: 224
-      split_pct: 0.2
-      seed: 42
-    experiment:
-      name: exp5
-
-  exp_resnet18_strong_aug:
-    model:
-      name: resnet18
-      num_classes: 100
-      dropout: 0.0
-
-    train:
-      lr: 0.0005
-      epochs: 100
-      patience: 10
-      optimizer: adam
-      loss: crossentropy
-
-    scheduler:
-      type: steplr
-      step_size: 10
-      gamma: 0.5
-
-    data:
-      batch_size: 64
-      image_size: 224
-      split_pct: 0.2
-      seed: 42
-      augmentations:
-        horizontal_flip: true
-        random_crop: true
-        random_rotation: 15
-        color_jitter: true
     experiment:
       name: exp6
 
-  exp_efficientnet_b0_strong_aug:
+  exp_restnet_scratch_no_aug:
     model:
-      name: efficientnet_b0
+      name: resnet18_scratch
       num_classes: 100
       dropout: 0.0
 
@@ -186,17 +177,13 @@ experiments:
       image_size: 224
       split_pct: 0.2
       seed: 42
-      augmentations:
-        horizontal_flip: true
-        random_crop: true
-        random_rotation: 15
-        color_jitter: true
+
     experiment:
       name: exp7
       
-  exp_densenet121_strong_aug:
+  exp_resnet18_dataset_norm:
     model:
-      name: densenet121
+      name: resnet18
       num_classes: 100
       dropout: 0.0
 
@@ -224,3 +211,30 @@ experiments:
         color_jitter: true
     experiment:
       name: exp8
+
+  exp_resnet_grayscale:
+    model:
+      name: resnet18
+      num_classes: 100
+      dropout: 0.0
+
+    train:
+      lr: 0.0005
+      epochs: 50
+      patience: 10
+      optimizer: adam
+      loss: crossentropy
+
+    scheduler:
+      type: steplr
+      step_size: 10
+      gamma: 0.5
+
+    data:
+      batch_size: 64
+      image_size: 224
+      split_pct: 0.2
+      seed: 42
+
+    experiment:
+      name: exp9
